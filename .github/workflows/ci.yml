@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: pip install -e ".[test]" || pip install -e .
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run tests
+        run: python -m pytest tests/ -v
+
+      - name: Verify CLI
+        run: |
+          pip install .
+          config-guard --help
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify zero dependencies
+        run: |
+          python -c "
+          import ast, sys
+          source = open('src/config_guard/__init__.py').read()
+          tree = ast.parse(source)
+          stdlib = {'json','os','re','sys','pathlib','argparse','importlib','collections','typing','abc','functools','itertools','math','string','textwrap','hashlib'}
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  for alias in node.names:
+                      mod = alias.name.split('.')[0]
+                      assert mod in stdlib, f'Non-stdlib import: {mod}'
+              elif isinstance(node, ast.ImportFrom) and node.module:
+                  mod = node.module.split('.')[0]
+                  assert mod in stdlib, f'Non-stdlib import: {mod}'
+          print('Zero external dependencies confirmed')
+          "
