@@ -34,19 +34,19 @@ pip install mcp-config-guard
 
 ```bash
 # Scan your current directory's .mcp.json
-config-guard
+mcp-config-guard
 
 # Scan a specific project
-config-guard --path /my/project
+mcp-config-guard --path /my/project
 
 # Auto-discover all MCP configs on your system
-config-guard --discover
+mcp-config-guard --discover
 
 # CI/CD integration (SARIF output for GitHub Code Scanning)
-config-guard --sarif > results.sarif
+mcp-config-guard --sarif > results.sarif
 
 # JSON output for scripting
-config-guard --json
+mcp-config-guard --json
 ```
 
 ## 54 Security Checks
