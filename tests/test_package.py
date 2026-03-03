@@ -25,7 +25,7 @@ import config_guard
 class TestPackageMetadata:
     def test_version_set(self):
         assert hasattr(config_guard, "__version__")
-        assert config_guard.__version__ == "1.4.0"
+        assert config_guard.__version__ == "2.0.0"
 
     def test_no_external_dependencies(self):
         """Config Guard must be zero-dependency (stdlib only)."""
@@ -816,7 +816,7 @@ class TestCLIVersionFlag:
             except SystemExit as e:
                 assert e.code == 0
         output = buf.getvalue()
-        assert "1.4.0" in output
+        assert "2.0.0" in output
 
 
 class TestPartialFingerprintFunction:
