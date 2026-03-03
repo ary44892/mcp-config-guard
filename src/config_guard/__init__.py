@@ -1650,7 +1650,7 @@ def format_sarif(findings: list, score: int, mcp_path: str = ".mcp.json") -> dic
                 "driver": {
                     "name": "mcp-config-guard",
                     "version": __version__,
-                    "informationUri": "https://github.com/KGT24k/config-guard",
+                    "informationUri": "https://github.com/KGT24k/mcp-config-guard",
                     "rules": rules,
                 }
             },
