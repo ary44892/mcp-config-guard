@@ -5,15 +5,11 @@ on:
     types: [published]
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/mcp-config-guard
     steps:
       - uses: actions/checkout@v4
 
@@ -23,12 +19,27 @@ jobs:
           python-version: "3.12"
 
       - name: Install build tools
-        run: pip install build
+        run: pip install build twine
 
       - name: Build package
         run: python -m build
 
+      - name: Check if version already on PyPI
+        id: check
+        run: |
+          VERSION=$(python -c "import re; print(re.search(r'version\s*=\s*\"(.+?)\"', open('pyproject.toml').read()).group(1))")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://pypi.org/pypi/mcp-config-guard/$VERSION/json")
+          if [ "$STATUS" = "200" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version $VERSION already on PyPI — skipping upload"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Version $VERSION not on PyPI — will upload"
+          fi
+
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          skip-existing: true
+        if: steps.check.outputs.exists == 'false'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload dist/*
