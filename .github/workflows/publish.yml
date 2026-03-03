@@ -10,6 +10,9 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/mcp-config-guard/
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +30,7 @@ jobs:
       - name: Check if version already on PyPI
         id: check
         run: |
-          VERSION=$(python -c "import re; print(re.search(r'version\s*=\s*\"(.+?)\"', open('pyproject.toml').read()).group(1))")
+          VERSION=$(python -c "import re; print(re.search(r'version\s*=\s*\\\"(.+?)\\\"', open('pyproject.toml').read()).group(1))")
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://pypi.org/pypi/mcp-config-guard/$VERSION/json")
           if [ "$STATUS" = "200" ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
