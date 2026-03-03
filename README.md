@@ -1,4 +1,4 @@
-# Config Guard
+# MCP Config Guard
 
 **Zero-dependency security linter for MCP configurations.**
 
