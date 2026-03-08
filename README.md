@@ -16,8 +16,8 @@ Scans your `.mcp.json` for 54 types of security vulnerabilities before any MCP s
 Config Guard catches what humans miss:
 
 - Typosquatted packages that look like real ones
-- Servers with known CVEs (22 CVEs across 20 packages)
-- 44 confirmed malicious packages (JFrog, Kaspersky, Lazarus APT, SANDWORM_MODE)
+- Servers with known CVEs (28 CVEs across 20 packages)
+- 56 confirmed malicious packages (JFrog, Kaspersky, Lazarus APT, SANDWORM_MODE)
 - Secret leakage in environment variables
 - Rug-pull vectors (`npx @latest` auto-updates)
 - Shadow servers exposing via tunnels
@@ -67,11 +67,11 @@ Every check is mapped to the [OWASP MCP Top 10](https://owasp.org/www-project-mc
 | 10 | Overbroad filesystem access (`/`, `C:\`) | MEDIUM | MCP-06 |
 | 11 | Environment variable leaks (hardcoded secrets) | MEDIUM | MCP-04 |
 | 12 | Excessive server count (attack surface) | LOW | MCP-10 |
-| 13 | Known CVEs (22 CVEs across 20 packages) | CRITICAL | MCP-09 |
+| 13 | Known CVEs (28 CVEs across 20 packages) | CRITICAL | MCP-09 |
 | 14 | Symlink bypass (CVE-2025-53109) | HIGH | MCP-05 |
 | 15 | Shadow servers (ngrok, cloudflared, `0.0.0.0`) | HIGH | MCP-05 |
 | 16 | Code execution (`eval`/`exec` patterns) | CRITICAL | MCP-01 |
-| 17 | Known malicious packages (44 confirmed malware) | CRITICAL | MCP-07 |
+| 17 | Known malicious packages (56 confirmed malware) | CRITICAL | MCP-07 |
 | 18 | Deprecated SSE transport (no per-request auth) | MEDIUM | MCP-03 |
 | 19 | Shell servers (raw shell as MCP server) | CRITICAL | MCP-01 |
 | 20 | Unpinned packages (npx/uvx without version) | MEDIUM | MCP-04 |
